@@ -1,6 +1,7 @@
 package com.example.authsql
 
 import android.content.Context
+import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -39,6 +40,8 @@ class MainActivity : AppCompatActivity() {
                 db.execSQL("INSERT INTO users VALUES('"+first_name_edt+"','"+email_edt+"','"+second_name_edt+"','"+password_edt+"')")
                 Toast.makeText(this, "USER SAVED SUCCESSFULLY", Toast.LENGTH_SHORT).show()
 
+            var gotologin =Intent(this,LoginActivity::class.java)
+            startActivity(gotologin)
             }
         }
     }
