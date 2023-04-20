@@ -42,6 +42,8 @@ class LoginActivity : AppCompatActivity() {
                     val intent = Intent(this, DashboardActivity::class.java)
                     startActivity(intent)
                     finish()
+                    Toast.makeText(this, "Logged In", Toast.LENGTH_SHORT).show()
+
                 } else {
                     Toast.makeText(this, "Invalid email or password, please try again", Toast.LENGTH_SHORT).show()
                 }
