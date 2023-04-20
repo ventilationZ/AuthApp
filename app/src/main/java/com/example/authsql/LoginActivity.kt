@@ -2,16 +2,19 @@ package com.example.authsql
 
 import android.content.ContentValues
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var EdtEmail: EditText
     private lateinit var EdtPassword: EditText
     private lateinit var BtnLogin : Button
     private lateinit var BtncreateAcc :Button
+    private lateinit var db: SQLiteDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -22,21 +25,29 @@ class LoginActivity : AppCompatActivity() {
 
 
         BtncreateAcc.setOnClickListener {
-            var gotocreateacc = Intent(this,LoginActivity::class.java)
+            var gotocreateacc = Intent(this,MainActivity::class.java)
             startActivity(gotocreateacc)
         }
         BtnLogin.setOnClickListener {
-            val admin = AdminSQ(this, "administracion",null,1)
-            val bd = admin.writableDatabase
-            val registro = ContentValues()
-            registro.put("nombre_usuario", et_nombre_201.text.toString())
-            registro.put("clave1", et_pasword_204.text.toString())
-            registro.put("clave2",et_paword_203.text.toString() )
-            bd.insert("usuario", null , registro)
-            bd.close()
-            et_pasword_204.setText("")
-            Toast.makeText(this,"Usuarios registrado correctamente", Toast.LENGTH_SHORT).show()
+            var emailedt = EdtEmail.text.toString().trim()
+            var passwordedt = EdtPassword.text.toString().trim()
+            //validate
+            if (emailedt.isEmpty() || passwordedt.isEmpty())
+                Toast.makeText(this, "Can't submit Check your Input", Toast.LENGTH_SHORT).show()
+            else{
+                val cursor = db.rawQuery("SELECT * FROM users WHERE arafa=? AND siri=?", arrayOf(emailedt, passwordedt))
 
-        }
+                if (cursor != null && cursor.moveToFirst()) {
+                    // user is authenticated, start a new activity
+                    val intent = Intent(this, DashboardActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this, "Invalid email or password, please try again", Toast.LENGTH_SHORT).show()
+                }
+
+
+            }
     }
+}
 }

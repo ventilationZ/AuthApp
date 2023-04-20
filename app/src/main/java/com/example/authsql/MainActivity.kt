@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         db =openOrCreateDatabase("ElijahDB", Context.MODE_PRIVATE, null)
 
-        db.execSQL("CREATE TABLE IF NOT EXISTS users(jinalakwanza VARCHAR,jinalapili VARCHAR,arafa VARCHAR,simu VARCHAR)")
+        db.execSQL("CREATE TABLE IF NOT EXISTS users(jinalakwanza VARCHAR,jinalapili VARCHAR,arafa VARCHAR,siri VARCHAR)")
 
         Btncreate.setOnClickListener {
             var first_name_edt = EdtFirstName.text.toString().trim()
